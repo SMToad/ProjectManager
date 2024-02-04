@@ -1,13 +1,18 @@
+import DefaultView from "./components/DefaultView";
 import SideBar from "./components/SideBar";
 
 function App() {
+  function handleCreateNewProject(){
+
+  }
+
   return (
     <>
-    <main className="h-screen my-8 flex gap-8">
-      <SideBar/>
-      <div>
-        <h2>Main content</h2>
-      </div>
+      <main className="h-screen my-8 flex gap-8">
+        <SideBar/>
+        <div className="flex-grow">
+          <DefaultView onCreateNewProject={handleCreateNewProject}/>
+        </div>
       </main>
     </>
   );
