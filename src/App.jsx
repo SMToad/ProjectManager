@@ -3,14 +3,16 @@ import { useState, useRef } from "react";
 import DefaultView from "./components/DefaultView";
 import SideBar from "./components/SideBar";
 import CreateProjectModal from "./components/CreateProjectModal";
+import ProjectView from "./components/ProjectView";
 
 function App() {
   const [projects, setProjects] = useState([]);
+  const [activeProject, setActiveProject] = useState();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const createDialog = useRef();
 
-  let noProjects = projects.length == 0;
+  let projectSelected = activeProject != null;
 
   function handleCreateNewProject(){
     createDialog.current.open();
@@ -26,18 +28,39 @@ function App() {
     handleCloseModal();
   }
 
+  function handleSelectProject(projectName){
+    setActiveProject(projects.find(project => project.title === projectName));
+  }
+
   function handleCloseModal(){
     createDialog.current.close();
     setModalIsOpen(false);
   }
 
+  function handleDeleteProject(){
+    setProjects(prevProjects => {
+      let newProjects = [...prevProjects];
+      const index = newProjects.indexOf(activeProject);
+      if (index > -1) { 
+        newProjects.splice(index, 1);
+        setActiveProject(null);
+      }
+      return newProjects;
+    })
+  }
+
   return (
     <>
       <main className="h-screen my-8 flex gap-8">
-        <SideBar onCreateNewProject={handleCreateNewProject} projects={projects}/>
+        <SideBar projects={projects} 
+          activeProject={activeProject} 
+          onCreateNewProject={handleCreateNewProject}
+          onSelectProject={handleSelectProject}/>
         <div id="main-content" className="flex-grow">
-          {noProjects && !modalIsOpen && <DefaultView onCreateNewProject={handleCreateNewProject}/>}
+          {!projectSelected && !modalIsOpen && <DefaultView onCreateNewProject={handleCreateNewProject}/>}
           <CreateProjectModal ref={createDialog} onCloseModal={handleCloseModal} onSaveProject={handleSaveProject}/>
+          {projectSelected && 
+            <ProjectView project={activeProject} onDeleteProject={handleDeleteProject}/>}
         </div>
       </main>
     </>

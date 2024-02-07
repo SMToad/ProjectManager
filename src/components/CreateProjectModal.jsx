@@ -46,8 +46,8 @@ const CreateProjectModal = forwardRef(function CreateProjectModal({onCloseModal,
     }
 
     return (
-        <dialog ref={dialog} className="bg-stone-50 h-screen w-3/5">
-            <form className="h-screen flex flex-col items-stretch justify-center mx-10" action="#" onSubmit={(event) => onSaveProject(event, createdProject)}>
+        <dialog ref={dialog} className="bg-stone-50 h-screen w-3/5 py-16">
+            <form className="h-screen flex flex-col items-stretch mx-10" action="#" onSubmit={(event) => onSaveProject(event, createdProject)}>
                 <div className="flex items-center justify-end gap-4">
                     <button className="px-5 py-1.5" onClick={onCloseModal}>Cancel</button>
                     <button 
@@ -58,9 +58,9 @@ const CreateProjectModal = forwardRef(function CreateProjectModal({onCloseModal,
                 <label for="title" className={labelClasses}>Title</label>
                 <input name="title" type="text" required value={createdProject.title} className={inputClasses} onChange={onTitleChange}/>
                 <label for="description" className={labelClasses}>Description</label>
-                <textarea name="description" value={createdProject.description} className={inputClasses} onChange={onDescriptionChange}/>
+                <textarea name="description" required value={createdProject.description} className={inputClasses} onChange={onDescriptionChange}/>
                 <label for="date" className={labelClasses}>Due date</label>
-                <input name="date" type="date" value={createdProject.date} className={inputClasses} onChange={onDateChange}/>
+                <input name="date" type="date" required value={createdProject.date} className={inputClasses} onChange={onDateChange}/>
             </form>
         </dialog>
     );

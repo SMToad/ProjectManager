@@ -1,16 +1,7 @@
-import { useState } from "react";
-
-export default function SideBar({projects, onCreateNewProject}){
-    const [activeProject, setActiveProject] = useState();
-
-    const projectSelected = activeProject != null;
-
-    function handleSelectProject(projectName){
-        setActiveProject(projects.find(project => project.name === projectName));
-    }
+export default function SideBar({projects, activeProject, onCreateNewProject, onSelectProject}){
 
     const buttonClassesBase = "px-1 py-0.5 text-left rounded-md";
-    const activeButtonClasses = "bg-stone-800" + buttonClassesBase;
+    const activeButtonClasses = "bg-stone-800 " + buttonClassesBase;
 
     return (
         <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
@@ -24,8 +15,8 @@ export default function SideBar({projects, onCreateNewProject}){
                 {projects.map((project, index) => 
                     <li key={index} className="grid my-2">
                         <button 
-                            className={((projectSelected && activeProject.name === project.name) ? activeButtonClasses : buttonClassesBase)}
-                            onClick={handleSelectProject}>
+                            className={((activeProject != null && activeProject.title === project.title) ? activeButtonClasses : buttonClassesBase)}
+                            onClick={() => onSelectProject(project.title)}>
                             {project.title}
                         </button>
                     </li>
