@@ -1,19 +1,24 @@
-import {useRef, useImperativeHandle, forwardRef} from "react";
+import {useRef, useImperativeHandle, forwardRef, useState} from "react";
 
 const CreateProjectModal = forwardRef(function CreateProjectModal({onCloseModal, onSaveProject}, ref){
     const dialog = useRef();
-
-    const labelClasses = "mt-6 text-left uppercase font-bold text-stone-500";
-    const inputClasses = "px-1 py-2 bg-stone-200";
-    const createdProject = {
+    const [createdProject, setCreatedProject] = useState({
         title: "",
         description: "",
         date: ""
-    };
+    });
+
+    const labelClasses = "mt-6 text-left uppercase font-bold text-stone-500";
+    const inputClasses = "px-1 py-2 bg-stone-200";
 
     useImperativeHandle(ref, () => {
         return {
             open(){
+                setCreatedProject({
+                    title: "",
+                    description: "",
+                    date: ""
+                });
                 dialog.current.show();
             },
             close(){
@@ -23,15 +28,21 @@ const CreateProjectModal = forwardRef(function CreateProjectModal({onCloseModal,
     });
 
     function onTitleChange(event){
-        createdProject.title = event.target.value;
+        setCreatedProject(oldCreatedProject => {
+            return {...oldCreatedProject, title: event.target.value}
+        });
     }
 
     function onDescriptionChange(event){
-        createdProject.description = event.target.value;
+        setCreatedProject(oldCreatedProject => {
+            return {...oldCreatedProject, description: event.target.value}
+        });
     }
 
     function onDateChange(event){
-        createdProject.date = event.target.value;
+        setCreatedProject(oldCreatedProject => {
+            return {...oldCreatedProject, date: event.target.value}
+        });
     }
 
     return (
@@ -45,11 +56,11 @@ const CreateProjectModal = forwardRef(function CreateProjectModal({onCloseModal,
                     </button>
                 </div>
                 <label for="title" className={labelClasses}>Title</label>
-                <input name="title" type="text" required className={inputClasses} onChange={onTitleChange}/>
+                <input name="title" type="text" required value={createdProject.title} className={inputClasses} onChange={onTitleChange}/>
                 <label for="description" className={labelClasses}>Description</label>
-                <textarea name="date" className={inputClasses} onChange={onDescriptionChange}/>
+                <textarea name="description" value={createdProject.description} className={inputClasses} onChange={onDescriptionChange}/>
                 <label for="date" className={labelClasses}>Due date</label>
-                <input name="date" type="date" className={inputClasses} onChange={onDateChange}/>
+                <input name="date" type="date" value={createdProject.date} className={inputClasses} onChange={onDateChange}/>
             </form>
         </dialog>
     );
