@@ -1,4 +1,5 @@
 import {useRef, useImperativeHandle, forwardRef, useState} from "react";
+import Input from "./Input";
 
 const DEFAULT_PROJECT = {
     title: "",
@@ -54,12 +55,24 @@ const CreateProjectModal = forwardRef(function CreateProjectModal({onCloseModal,
                         Save
                     </button>
                 </div>
-                <label for="title" className={labelClasses}>Title</label>
-                <input name="title" type="text" required value={createdProject.title} className={inputClasses} onChange={onTitleChange}/>
-                <label for="description" className={labelClasses}>Description</label>
-                <textarea name="description" required value={createdProject.description} className={inputClasses} onChange={onDescriptionChange}/>
-                <label for="date" className={labelClasses}>Due date</label>
-                <input name="date" type="date" required value={createdProject.date} className={inputClasses} onChange={onDateChange}/>
+                <Input 
+                    label="Title" 
+                    type="text" 
+                    required 
+                    value={createdProject.title} 
+                    onChange={onTitleChange}/>
+                <Input 
+                    label="Description" 
+                    textarea 
+                    required 
+                    value={createdProject.description} 
+                    onChange={onDescriptionChange}/>
+                <Input 
+                    label="Due Date"
+                    type="date" 
+                    required 
+                    value={createdProject.date} 
+                    onChange={onDateChange}/>
             </form>
         </dialog>
     );

@@ -29,7 +29,7 @@ export default function ProjectView({project, onDeleteProject, onAddTask, onDele
             <div>
                 <input 
                     type="text" 
-                    className="w-1/4 p-1 mr-4 rounded bg-stone-200"
+                    className="w-1/4 p-1 mr-4 rounded border-b-2 bg-stone-200 border-stone-300  focus:outline-none focus:border-stone-600"
                     value={taskName}
                     onChange={handleChange}/>
                 <button className={buttonClasses} onClick={handleAddTask}>
