@@ -1,6 +1,6 @@
 export default function SideBar({projects, activeProject, onCreateNewProject, onSelectProject}){
 
-    const buttonClassesBase = "px-1 py-0.5 text-left rounded-md";
+    const buttonClassesBase = "px-2 py-1 text-left rounded-md";
     const activeButtonClasses = "bg-stone-800 " + buttonClassesBase;
 
     return (
