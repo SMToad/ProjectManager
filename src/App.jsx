@@ -1,45 +1,36 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import DefaultView from "./components/DefaultView";
 import SideBar from "./components/SideBar";
-import CreateProjectModal from "./components/CreateProjectModal";
+import CreateProject from "./components/CreateProject";
 import ProjectView from "./components/ProjectView";
 
 function App() {
   const [projects, setProjects] = useState([]);
-  const [activeProject, setActiveProject] = useState();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [activeProject, setActiveProject] = useState(undefined);
 
-  const createDialog = useRef();
-
-  let projectSelected = activeProject != null;
+  let projectSelected = activeProject != null && activeProject != undefined;
+  let createMode = activeProject === null;
 
   function handleCreateNewProject(){
     setActiveProject(null);
-    createDialog.current.open();
-    setModalIsOpen(true);
   }
 
-  function handleSaveProject(event, createdProject){
+  function handleCancelCreate(){
+    setActiveProject(undefined);
+  }
+
+  function handleAddProject(event, createdProject){
     event.preventDefault();
     setProjects(prevProjects => {
       let newProjects = [...prevProjects, createdProject];
       return newProjects;
     })
-    handleCloseModal();
+    setActiveProject(undefined);
   }
 
   function handleSelectProject(projectName){
-    if(modalIsOpen){
-      handleCloseModal();
-    }
-
     setActiveProject(projects.find(project => project.title === projectName));
-  }
-
-  function handleCloseModal(){
-    createDialog.current.close();
-    setModalIsOpen(false);
   }
 
   function handleDeleteProject(){
@@ -48,7 +39,7 @@ function App() {
       const index = newProjects.indexOf(activeProject);
       if (index > -1) { 
         newProjects.splice(index, 1);
-        setActiveProject(null);
+        setActiveProject(undefined);
       }
       return newProjects;
     })
@@ -97,8 +88,8 @@ function App() {
           onCreateNewProject={handleCreateNewProject}
           onSelectProject={handleSelectProject}/>
         <div id="main-content" className="flex-grow">
-          {!projectSelected && !modalIsOpen && <DefaultView onCreateNewProject={handleCreateNewProject}/>}
-          <CreateProjectModal ref={createDialog} onCloseModal={handleCloseModal} onSaveProject={handleSaveProject}/>
+          {!projectSelected && !createMode && <DefaultView onCreateNewProject={handleCreateNewProject}/>}
+          {createMode && <CreateProject onCancel={handleCancelCreate} onAddProject={handleAddProject}/>}
           {projectSelected && 
             <ProjectView 
               project={activeProject} 

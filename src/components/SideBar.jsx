@@ -1,3 +1,4 @@
+import Button from "./Button";
 export default function SideBar({projects, activeProject, onCreateNewProject, onSelectProject}){
 
     const buttonClassesBase = "px-2 py-1 text-left rounded-md";
@@ -6,11 +7,11 @@ export default function SideBar({projects, activeProject, onCreateNewProject, on
     return (
         <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
             <h2 className="font-bold uppercase mb-8 md:text-xl text-stone-200">Your projects</h2>
-            <button 
-                className="px-4 py-2 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
-                onClick={onCreateNewProject}>
+            <Button 
+                onClick={onCreateNewProject}
+                borded>
                 + Add Project
-            </button>
+            </Button>
             <menu className="my-8">
                 {projects.map((project, index) => 
                     <li key={index} className="grid my-2">
