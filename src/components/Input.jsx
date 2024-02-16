@@ -6,13 +6,13 @@ const Input = forwardRef(function Input({label, textarea, ...props}, ref){
 
     return (
         <p className="flex flex-col">
-            <label for="input" className={labelClasses}>
+            <label className={labelClasses}>
                 {label}
                 </label>
             {textarea && 
-                <textarea ref={ref} name="input" className={inputClasses} {...props}/>}
+                <textarea ref={ref} className={inputClasses} {...props}/>}
             {!textarea && 
-                <input ref={ref} name="input" className={inputClasses} {...props}/>}
+                <input ref={ref} className={inputClasses} {...props}/>}
         </p>
     );
 });

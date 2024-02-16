@@ -13,8 +13,8 @@ export default function SideBar({projects, activeProject, onCreateNewProject, on
                 + Add Project
             </Button>
             <menu className="my-8">
-                {projects.map((project, index) => 
-                    <li key={index} className="grid my-2">
+                {projects.map((project) => 
+                    <li key={project.id} className="grid my-2">
                         <button 
                             className={((activeProject != null && activeProject.title === project.title) ? activeButtonClasses : buttonClassesBase)}
                             onClick={() => onSelectProject(project.title)}>

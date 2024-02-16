@@ -23,7 +23,10 @@ function App() {
   function handleAddProject(event, createdProject){
     event.preventDefault();
     setProjects(prevProjects => {
-      let newProjects = [...prevProjects, createdProject];
+      let newProjects = [{
+        ...createdProject,
+        id: Math.floor(Math.random() * 100)
+      }, ...prevProjects];
       return newProjects;
     })
     setActiveProject(undefined);
@@ -34,15 +37,10 @@ function App() {
   }
 
   function handleDeleteProject(){
+    setActiveProject(undefined);
     setProjects(prevProjects => {
-      let newProjects = [...prevProjects];
-      const index = newProjects.indexOf(activeProject);
-      if (index > -1) { 
-        newProjects.splice(index, 1);
-        setActiveProject(undefined);
-      }
-      return newProjects;
-    })
+      return [...prevProjects.filter(project => project !== activeProject)];
+    });
   }
 
   function updateTasksInActiveObject(newTasks){
@@ -60,7 +58,9 @@ function App() {
   function handleAddTask(taskName){
       if(projectSelected && taskName){
         setActiveProject(project => {
-          var newTasks = [...project.tasks, {id: projects.length, name: taskName}];
+          var newTasks = [{
+            id: Math.floor(Math.random() * 100), 
+            name: taskName}, ...project.tasks];
           return updateTasksInActiveObject(newTasks);
         });
       }
@@ -69,12 +69,7 @@ function App() {
   function handleDeleteTask(taskToDelete){
     if(projectSelected && taskToDelete !== null){
       setActiveProject(project => {
-        var newTasks = [...project.tasks];
-        const index = newTasks.indexOf(taskToDelete);
-        if (index > -1) { 
-          newTasks.splice(index, 1);
-        }
-
+        var newTasks = [...project.tasks.filter(task => task != taskToDelete)];
         return updateTasksInActiveObject(newTasks);
       });
     }

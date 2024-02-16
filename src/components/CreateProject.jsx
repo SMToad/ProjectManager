@@ -42,10 +42,10 @@ export default function CreateProject({onCancel, onAddProject}){
                 Invalid input
             </h2>
             <p className="text-stone-600 mt-4">
-                Some of the input fields were empty...
+                Some of the input fields did not have valid data in them.
             </p>
             <p className="text-stone-600 mt-4">
-                Please make sure that all of the input fields hava data in them
+                Please make sure that all of the input fields are not empty and the text fields are at least 3-digit long.
             </p>
         </InfoModal>
             <section className="bg-stone-50 h-screen w-3/5 py-16">
